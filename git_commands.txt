@@ -75,3 +75,12 @@ Commits the complete Git command log into the repository history.
 
 git push origin main
 Pushes the latest commit containing git_commands.txt to the remote GitHub repository.
+
+git add report.html GitAssignment_Report.pdf
+Stages the final assignment report HTML and generated PDF deliverable.
+
+git commit -m "Add final assignment report documentation and PDF"
+Commits the final assignment documentation and submission PDF into the repository.
+
+git push origin main
+Pushes the complete project deliverables to the remote GitHub repository.
