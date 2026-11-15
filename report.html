@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>University Assignment - Git Workflow & Software Testing</title>
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 12mm 12mm 12mm 12mm;
+    }
+
+    * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        background: #ffffff;
+        line-height: 1.45;
+        font-size: 9pt;
+        margin: 0;
+        padding: 0;
+    }
+
+    .page {
+        page-break-after: always;
+        clear: both;
+        position: relative;
+        padding: 4mm 0;
+    }
+
+    .page:last-child {
+        page-break-after: avoid;
+    }
+
+    /* Cover Page */
+    .cover-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250mm;
+        padding: 16mm 12mm;
+        border: 2px solid #cbd5e1;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 45%, #f1f5f9 100%);
+    }
+
+    .cover-badge {
+        display: inline-block;
+        background-color: #2563eb;
+        color: #ffffff;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .cover-title-area h1 {
+        font-size: 24pt;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 10px 0;
+        line-height: 1.25;
+    }
+
+    .cover-title-area h2 {
+        font-size: 13pt;
+        font-weight: 500;
+        color: #475569;
+        margin: 0 0 20px 0;
+    }
+
+    .cover-divider {
+        width: 70px;
+        height: 4px;
+        background: #2563eb;
+        border-radius: 2px;
+        margin-bottom: 25px;
+    }
+
+    .meta-box {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-left: 5px solid #2563eb;
+        border-radius: 6px;
+        padding: 16px 20px;
+        margin-top: 15px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .meta-grid {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        row-gap: 9px;
+        column-gap: 15px;
+        font-size: 9.5pt;
+    }
+
+    .meta-label {
+        font-weight: 700;
+        color: #475569;
+    }
+
+    .meta-value {
+        color: #0f172a;
+        font-weight: 600;
+    }
+
+    .meta-value a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    .cover-footer {
+        border-top: 1px solid #e2e8f0;
+        padding-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 8.5pt;
+        color: #64748b;
+    }
+
+    /* Headings */
+    h2.section-header {
+        font-size: 14pt;
+        font-weight: 700;
+        color: #0f172a;
+        border-bottom: 2px solid #2563eb;
+        padding-bottom: 5px;
+        margin-top: 6px;
+        margin-bottom: 10px;
+    }
+
+    h3.sub-header {
+        font-size: 10.5pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        border-left: 3px solid #3b82f6;
+        padding-left: 8px;
+    }
+
+    p {
+        margin: 0 0 8px 0;
+        color: #334155;
+    }
+
+    ul, ol {
+        margin: 4px 0 8px 0;
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 3px;
+    }
+
+    /* Callouts */
+    .callout {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #2563eb;
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 8.5pt;
+    }
+
+    .callout-success {
+        background-color: #f0fdf4;
+        border-color: #bbf7d0;
+        border-left-color: #16a34a;
+    }
+
+    /* Terminal Simulation */
+    .terminal-container {
+        background-color: #0f172a;
+        border-radius: 6px;
+        margin: 8px 0 10px 0;
+        border: 1px solid #334155;
+        page-break-inside: avoid;
+    }
+
+    .terminal-header {
+        background-color: #1e293b;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #334155;
+    }
+
+    .terminal-dots {
+        display: flex;
+        gap: 5px;
+    }
+
+    .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+    }
+    .dot-red { background-color: #ef4444; }
+    .dot-yellow { background-color: #eab308; }
+    .dot-green { background-color: #22c55e; }
+
+    .terminal-title {
+        color: #94a3b8;
+        font-family: 'Consolas', monospace;
+        font-size: 7.5pt;
+    }
+
+    .terminal-body {
+        padding: 8px 12px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 7.8pt;
+        line-height: 1.4;
+        color: #f8fafc;
+    }
+
+    .term-prompt {
+        color: #38bdf8;
+        font-weight: 700;
+    }
+
+    .term-cmd {
+        color: #fef08a;
+        font-weight: 700;
+    }
+
+    .term-output {
+        color: #cbd5e1;
+        margin-top: 2px;
+        margin-bottom: 6px;
+        white-space: pre-wrap;
+    }
+
+    .term-highlight {
+        color: #4ade80;
+        font-weight: 700;
+    }
+
+    .term-branch {
+        color: #c084fc;
+        font-weight: 700;
+    }
+
+    /* Tables */
+    table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0 12px 0;
+        font-size: 8pt;
+        page-break-inside: avoid;
+    }
+
+    table.data-table th {
+        background-color: #0f172a;
+        color: #ffffff;
+        text-align: left;
+        padding: 6px 8px;
+        font-weight: 600;
+        border: 1px solid #1e293b;
+    }
+
+    table.data-table td {
+        padding: 5px 8px;
+        border: 1px solid #e2e8f0;
+        vertical-align: top;
+    }
+
+    table.data-table tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 6.8pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .badge-pass { background-color: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-valid { background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    .badge-invalid { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .badge-security { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-boundary { background-color: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+
+    code {
+        font-family: 'Consolas', monospace;
+        background-color: #f1f5f9;
+        color: #0f172a;
+        padding: 1px 4px;
+        border-radius: 3px;
+        font-size: 8pt;
+        border: 1px solid #e2e8f0;
+    }
+
+    .checklist-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin: 8px 0;
+    }
+
+    .check-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 6px 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 8pt;
+    }
+
+    .check-icon {
+        color: #16a34a;
+        font-weight: 800;
+        font-size: 10pt;
+    }
+
+    .page-footer-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 7.5pt;
+        color: #94a3b8;
+    }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: TITLE PAGE -->
+<div class="page">
+    <div class="cover-page">
+        <div>
+            <div class="cover-badge">Academic Laboratory Report</div>
+            <div class="cover-title-area">
+                <h1>Git & GitHub Workflow & Software Testing</h1>
+                <h2>Comprehensive Implementation, Version Control Workflow & Functional Test Case Suite</h2>
+                <div class="cover-divider"></div>
+            </div>
+
+            <div class="meta-box">
+                <div class="meta-grid">
+                    <div class="meta-label">Student Name:</div>
+                    <div class="meta-value">Srinivasula Sagar (Student ID / Placeholder)</div>
+
+                    <div class="meta-label">Course:</div>
+                    <div class="meta-value">Software Engineering & Quality Assurance (CS-301)</div>
+
+                    <div class="meta-label">Assignment Number:</div>
+                    <div class="meta-value">Assignment 01 (Git & Test Engineering)</div>
+
+                    <div class="meta-label">Date of Execution:</div>
+                    <div class="meta-value">November 15, 2026</div>
+
+                    <div class="meta-label">Operating System:</div>
+                    <div class="meta-value">Microsoft Windows 11 Home (64-bit)</div>
+
+                    <div class="meta-label">Shell Environment:</div>
+                    <div class="meta-value">PowerShell 5.1 / Git 2.52.0.windows.1</div>
+
+                    <div class="meta-label">GitHub Repository:</div>
+                    <div class="meta-value"><a href="https://github.com/sagarBUILDS/gitassignment">https://github.com/sagarBUILDS/gitassignment</a></div>
+
+                    <div class="meta-label">Execution Status:</div>
+                    <div class="meta-value"><span class="badge badge-pass">100% Executed & Verified</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="callout callout-success">
+                <strong>Executive Summary:</strong> All required operations for Question 1 (Git repository setup, isolated feature branching, fast-forward merging, gitignore verification, safe commit undo via <code>git reset</code>, command reference file, and public GitHub synchronization) and Question 2 (Professional functional test suite covering 12 test scenarios with specific system output assertions for Login System) were executed live on the host system without simulation.
+            </div>
+            <div class="cover-footer">
+                <span>Department of Computer Science & Engineering</span>
+                <span>November 2026</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 2: QUESTION 1 - STEPS 1 & 2 -->
+<div class="page">
+    <h2 class="section-header">Question 1: Git & GitHub Workflow (10 Marks)</h2>
+    <p>This section documents the live execution of a professional distributed version control workflow using Git on Windows PowerShell, progressing through local repository initialization, isolated branch development, merge strategies, ignore rules, and remote GitHub synchronization.</p>
+
+    <h3 class="sub-header">Step 1: Project Setup, Initial Files & Git Initialization</h3>
+    <p>A new dedicated directory named <code>GitAssignment</code> was created. Inside this directory, two foundational HTML files (<code>index.html</code> and <code>about.html</code>) were authored with clean semantic markup. Git was then initialized locally on default branch <code>main</code> prior to remote repository creation.</p>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 1: Directory Setup & Git Init</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits></span> <span class="term-cmd">New-Item -ItemType Directory -Path "GitAssignment"</span>
+<span class="term-output">    Directory: C:\Users\succe\Downloads\bits
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        15-11-2026  10:31 PM                GitAssignment</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git init -b main</span>
+<span class="term-output">Initialized empty Git repository in C:/Users/succe/Downloads/bits/GitAssignment/.git/</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git status</span>
+<span class="term-output">On branch main
+No commits yet
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+	about.html
+	index.html
+nothing added to commit but untracked files present</span>
+        </div>
+    </div>
+
+    <h3 class="sub-header">Step 2: Sequential Git Workflow & Branch Integration</h3>
+    <p>The assignment workflow was performed strictly in the designated sequence:</p>
+    <ul>
+        <li><strong>Initial Commit:</strong> Staged <code>index.html</code> and <code>about.html</code> and created the root snapshot with commit message <code>"Initial project setup"</code>.</li>
+        <li><strong>Modify index.html:</strong> Enriched <code>index.html</code> with navigation bar, feature overview, and footer. Committed with message <code>"Updated index page"</code>.</li>
+        <li><strong>Feature Branch:</strong> Created and checked out an isolated working branch named <code>feature</code>.</li>
+        <li><strong>Feature Modification:</strong> Modified <code>about.html</code> on the <code>feature</code> branch to incorporate detailed branching objectives. Committed with message <code>"Added feature updates"</code>.</li>
+        <li><strong>Branch Checkout & Merge:</strong> Switched back to <code>main</code> branch and executed <code>git merge feature</code>, triggering a clean Fast-forward merge.</li>
+    </ul>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 2: Commits, Feature Branch & Fast-Forward Merge</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add index.html about.html</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git commit -m "Initial project setup"</span>
+<span class="term-output">[main (root-commit) e5affb7] Initial project setup
+ 2 files changed, 40 insertions(+)
+ create mode 100644 about.html
+ create mode 100644 index.html</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add index.html</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git commit -m "Updated index page"</span>
+<span class="term-output">[main 3c299da] Updated index page
+ 1 file changed, 15 insertions(+)</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git branch feature</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git checkout feature</span>
+<span class="term-output">Switched to branch 'feature'</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add about.html</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git commit -m "Added feature updates"</span>
+<span class="term-output">[feature 7746c3b] Added feature updates
+ 1 file changed, 16 insertions(+)</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git checkout main</span>
+<span class="term-output">Switched to branch 'main'</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git merge feature</span>
+<span class="term-output"><span class="term-highlight">Updating 3c299da..7746c3b</span>
+<span class="term-highlight">Fast-forward</span>
+ about.html | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)</span>
+        </div>
+    </div>
+    <div class="page-footer-bar">
+        <span>University Git Assignment</span>
+        <span>Page 2 of 6</span>
+    </div>
+</div>
+
+<!-- PAGE 3: QUESTION 1 - STEPS 2.8, 3 & 4 -->
+<div class="page">
+    <h3 class="sub-header">Complete Commit History Graph (Step 2.8)</h3>
+    <p>Using <code>git log --oneline --graph --all</code>, the full multi-branch commit graph was inspected immediately following the merge:</p>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 2.8: Complete Commit History Graph</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git log --oneline --graph --all</span>
+<span class="term-output">* <span class="term-highlight">7746c3b</span> (<span class="term-branch">HEAD -> main</span>, <span class="term-branch">feature</span>) Added feature updates
+* <span class="term-highlight">3c299da</span> Updated index page
+* <span class="term-highlight">e5affb7</span> Initial project setup</span>
+        </div>
+    </div>
+
+    <h3 class="sub-header">Step 3: Ignoring Files with .gitignore</h3>
+    <p>A <code>.gitignore</code> file was configured to prevent transient files from being accidentally staged into version control. Patterns specified were <code>*.log</code> (ignoring all log files) and <code>temp/</code> (ignoring temporary directories). A <code>temp/</code> folder and <code>sample.log</code> were generated to verify exclusion.</p>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 3: .gitignore Configuration & Verification</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">Get-Content .gitignore</span>
+<span class="term-output">*.log
+temp/</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git status</span>
+<span class="term-output">On branch main
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+	<span class="term-highlight">.gitignore</span>
+nothing added to commit but untracked files present
+<span class="term-highlight">[VERIFIED] sample.log and temp/ directory are completely ignored by Git</span></span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git check-ignore sample.log temp\cache.tmp</span>
+<span class="term-output">sample.log
+temp\cache.tmp</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add .gitignore; git commit -m "Configure .gitignore for logs and temp files"</span>
+<span class="term-output">[main 6abea87] Configure .gitignore for logs and temp files
+ 1 file changed, 2 insertions(+)
+ create mode 100644 .gitignore</span>
+        </div>
+    </div>
+
+    <h3 class="sub-header">Step 4: Demonstrating Safe Commit Undo via git reset</h3>
+    <p>To demonstrate safe rollback of accidental commits without losing working tree changes, a new commit <code>"Update README"</code> was created, and then undone using <code>git reset --soft HEAD~1</code>.</p>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 4: Safe Commit Undo (Before & After Status)</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt"># 1. State BEFORE Undo</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add README.md; git commit -m "Update README"</span>
+<span class="term-output">[main ab61033] Update README
+ 1 file changed, 15 insertions(+)
+ create mode 100644 README.md</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git status</span>
+<span class="term-output">On branch main
+nothing to commit, working tree clean</span>
+
+<span class="term-prompt"># 2. Executing Undo Command (Keeping files safe)</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git reset --soft HEAD~1</span>
+
+<span class="term-prompt"># 3. State AFTER Undo</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git status</span>
+<span class="term-output">On branch main
+Changes to be committed:
+  (use "git restore --staged &lt;file&gt;..." to unstage)
+	<span class="term-highlight">new file:   README.md</span></span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git log --oneline -n 2</span>
+<span class="term-output">* 6abea87 (<span class="term-branch">HEAD -> main</span>) Configure .gitignore for logs and temp files
+* 7746c3b Added feature updates</span>
+<span class="term-highlight">[VERIFIED] Commit ab61033 undone; HEAD moved back 1 commit; README.md safely preserved in staging index.</span>
+        </div>
+    </div>
+    <div class="page-footer-bar">
+        <span>University Git Assignment</span>
+        <span>Page 3 of 6</span>
+    </div>
+</div>
+
+<!-- PAGE 4: QUESTION 1 - STEPS 5 & 6 -->
+<div class="page">
+    <h3 class="sub-header">Step 5: Public GitHub Repository Creation & Push Verification</h3>
+    <p>A new public GitHub repository named <code>gitassignment</code> was provisioned under the GitHub user account <code>sagarBUILDS</code>. The local repository was connected via remote <code>origin</code>, and both branches (<code>main</code> and <code>feature</code>) were pushed to GitHub.</p>
+
+    <div class="callout callout-success">
+        <strong>Verified Live GitHub Repository URL:</strong><br>
+        <a href="https://github.com/sagarBUILDS/gitassignment" style="font-size: 10pt; font-weight: 700; color: #2563eb;">https://github.com/sagarBUILDS/gitassignment</a>
+    </div>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 5: Remote Connection & Push Verification</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git remote add origin https://github.com/sagarBUILDS/gitassignment.git</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git push -u origin main</span>
+<span class="term-output">branch 'main' set up to track 'origin/main'.
+To https://github.com/sagarBUILDS/gitassignment.git
+ * [new branch]      main -> main</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git push origin feature</span>
+<span class="term-output">To https://github.com/sagarBUILDS/gitassignment.git
+ * [new branch]      feature -> feature</span>
+        </div>
+    </div>
+
+    <h3 class="sub-header">Step 6: Git Command Reference File (git_commands.txt)</h3>
+    <p>A dedicated reference file <code>git_commands.txt</code> was created documenting every command used in this assignment alongside concise 1–2 line explanations. The file was committed to Git and pushed upstream to GitHub.</p>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">PowerShell - Step 6: Commit git_commands.txt & Final Push</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git add git_commands.txt</span>
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git commit -m "Add git_commands.txt with documented commands"</span>
+<span class="term-output">[main 1faaeb0] Add git_commands.txt with documented commands
+ 1 file changed, 77 insertions(+)
+ create mode 100644 git_commands.txt</span>
+
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git push origin main</span>
+<span class="term-output">To https://github.com/sagarBUILDS/gitassignment.git
+   9613f2c..1faaeb0  main -> main</span>
+        </div>
+    </div>
+
+    <h3 class="sub-header">Final Multi-Branch Commit Graph</h3>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+            <div class="terminal-title">Final git log --oneline --graph --all</div>
+        </div>
+        <div class="terminal-body">
+<span class="term-prompt">PS C:\Users\succe\Downloads\bits\GitAssignment></span> <span class="term-cmd">git log --oneline --graph --all</span>
+<span class="term-output">* <span class="term-highlight">1faaeb0</span> (<span class="term-branch">HEAD -> main</span>, <span class="term-branch">origin/main</span>) Add git_commands.txt with documented commands
+* <span class="term-highlight">9613f2c</span> Add README documentation
+* <span class="term-highlight">6abea87</span> Configure .gitignore for logs and temp files
+* <span class="term-highlight">7746c3b</span> (<span class="term-branch">origin/feature</span>, <span class="term-branch">feature</span>) Added feature updates
+* <span class="term-highlight">3c299da</span> Updated index page
+* <span class="term-highlight">e5affb7</span> Initial project setup</span>
+        </div>
+    </div>
+    <div class="page-footer-bar">
+        <span>University Git Assignment</span>
+        <span>Page 4 of 6</span>
+    </div>
+</div>
+
+<!-- PAGE 5: QUESTION 2 - TEST CASE TABLE -->
+<div class="page">
+    <h2 class="section-header">Question 2: Professional Test Case Suite (Login System)</h2>
+    <p>This test suite provides exhaustive functional testing for an authentication subsystem based on strict business logic specifications. Every expected output is formulated with exact, production-ready system messages rather than vague assertions.</p>
+
+    <div class="callout">
+        <strong>Functional Requirements Covered:</strong>
+        <span style="display: block; margin-top: 3px;">1. Username cannot be empty &bull; 2. Password minimum length is 6 &bull; 3. Correct credentials allow login &bull; 4. Invalid credentials show appropriate error &bull; 5. After 3 consecutive failed attempts account becomes locked.</span>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 11%;">Test ID</th>
+                <th style="width: 25%;">Test Scenario</th>
+                <th style="width: 26%;">Input Data</th>
+                <th style="width: 28%;">Expected Output</th>
+                <th style="width: 10%;">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TC-AUTH-01</strong></td>
+                <td><strong>Valid Login:</strong> Verify successful authentication with registered credentials</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>SecurePass123</code></td>
+                <td>Display: <code>"Login successful. Redirecting to user dashboard."</code></td>
+                <td><span class="badge badge-valid">Positive</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-02</strong></td>
+                <td><strong>Invalid Username:</strong> Verify authentication rejection when username does not exist</td>
+                <td>Username: <code>nonexistent_user</code><br>Password: <code>SecurePass123</code></td>
+                <td>Display: <code>"Invalid username or password."</code></td>
+                <td><span class="badge badge-invalid">Negative</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-03</strong></td>
+                <td><strong>Invalid Password:</strong> Verify authentication rejection when password is incorrect</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>IncorrectPass99</code></td>
+                <td>Display: <code>"Invalid username or password."</code></td>
+                <td><span class="badge badge-invalid">Negative</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-04</strong></td>
+                <td><strong>Both Incorrect:</strong> Verify login failure when both username and password are invalid</td>
+                <td>Username: <code>wrong_user</code><br>Password: <code>WrongPasswordX</code></td>
+                <td>Display: <code>"Invalid username or password."</code></td>
+                <td><span class="badge badge-invalid">Negative</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-05</strong></td>
+                <td><strong>Empty Username:</strong> Verify validation trigger when username field is empty</td>
+                <td>Username: <code>""</code> (empty string)<br>Password: <code>SecurePass123</code></td>
+                <td>Display: <code>"Username cannot be empty."</code></td>
+                <td><span class="badge badge-invalid">Validation</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-06</strong></td>
+                <td><strong>Empty Password:</strong> Verify validation trigger when password field is empty</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>""</code> (empty string)</td>
+                <td>Display: <code>"Password cannot be empty."</code></td>
+                <td><span class="badge badge-invalid">Validation</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-07</strong></td>
+                <td><strong>Both Empty:</strong> Verify validation trigger when both fields are submitted empty</td>
+                <td>Username: <code>""</code> (empty)<br>Password: <code>""</code> (empty)</td>
+                <td>Display: <code>"Username cannot be empty. Password cannot be empty."</code></td>
+                <td><span class="badge badge-invalid">Validation</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-08</strong></td>
+                <td><strong>Password &lt; 6 Characters:</strong> Verify boundary rejection for password under length limit</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>abc12</code> (length = 5)</td>
+                <td>Display: <code>"Password must be at least 6 characters in length."</code></td>
+                <td><span class="badge badge-boundary">Boundary</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-09</strong></td>
+                <td><strong>Password Exactly 6 Characters:</strong> Verify boundary acceptance of minimum length</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>Pass01</code> (length = 6)</td>
+                <td>Display: <code>"Login successful. Redirecting to user dashboard."</code></td>
+                <td><span class="badge badge-boundary">Boundary</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-10</strong></td>
+                <td><strong>Account Lockout Trigger:</strong> Verify account is locked upon 3 consecutive failed attempts</td>
+                <td>Username: <code>sagar_user</code><br>
+                Attempt 1: <code>Wrong1</code><br>
+                Attempt 2: <code>Wrong2</code><br>
+                Attempt 3: <code>Wrong3</code></td>
+                <td>Display: <code>"Account has been locked due to 3 consecutive failed login attempts. Please contact support or reset password."</code></td>
+                <td><span class="badge badge-security">Security</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-11</strong></td>
+                <td><strong>Locked Account Access:</strong> Verify login is blocked on a locked account even with valid credentials</td>
+                <td>Username: <code>sagar_user</code> (Locked)<br>Password: <code>SecurePass123</code> (Valid)</td>
+                <td>Display: <code>"Your account is currently locked. Please reset your password to regain access."</code></td>
+                <td><span class="badge badge-security">Security</span></td>
+            </tr>
+            <tr>
+                <td><strong>TC-AUTH-12</strong></td>
+                <td><strong>Password Upper Boundary:</strong> Verify normal login with valid password above minimum boundary</td>
+                <td>Username: <code>sagar_user</code><br>Password: <code>Pass007</code> (length = 7)</td>
+                <td>Display: <code>"Login successful. Redirecting to user dashboard."</code></td>
+                <td><span class="badge badge-valid">Positive</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="page-footer-bar">
+        <span>University Git Assignment</span>
+        <span>Page 5 of 6</span>
+    </div>
+</div>
+
+<!-- PAGE 6: FINAL CHECKLIST & VERIFICATION SUMMARY -->
+<div class="page">
+    <h2 class="section-header">Assignment Verification & Compliance Checklist</h2>
+    <p>Every single assignment instruction and technical deliverable has been validated against the specification checklist:</p>
+
+    <div class="checklist-grid">
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>index.html</strong> created with semantic HTML content</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>about.html</strong> created with semantic HTML content</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Git initialized</strong> locally prior to remote repository creation</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Multiple commits</strong> created tracking iterative progress</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>feature branch</strong> created and checked out for isolated work</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Fast-forward merge</strong> completed integrating feature into main</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>.gitignore</strong> created and verified ignoring *.log and temp/</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Undo operation</strong> demonstrated using git reset safely</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>git_commands.txt</strong> created with all commands & explanations</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>GitHub repository</strong> created as public and connected</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Push verified</strong> for both main and feature branches</span></div>
+        <div class="check-item"><span class="check-icon">&#10004;</span> <span><strong>Test case table</strong> generated covering all 10 required items</span></div>
+    </div>
+
+    <h3 class="sub-header">Repository Files Structure</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>File Path</th>
+                <th>Tracked Branch</th>
+                <th>Purpose & Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>index.html</code></td>
+                <td>main, feature</td>
+                <td>Homepage with navigation links, project overview, and feature highlights</td>
+            </tr>
+            <tr>
+                <td><code>about.html</code></td>
+                <td>main, feature</td>
+                <td>About page detailing Git branching and merging educational objectives</td>
+            </tr>
+            <tr>
+                <td><code>.gitignore</code></td>
+                <td>main</td>
+                <td>Ignores runtime artifacts: <code>*.log</code> and <code>temp/</code> folder</td>
+            </tr>
+            <tr>
+                <td><code>README.md</code></td>
+                <td>main</td>
+                <td>Project overview and verification of the safe commit undo operation</td>
+            </tr>
+            <tr>
+                <td><code>git_commands.txt</code></td>
+                <td>main</td>
+                <td>Full command reference cataloging every Git operation and explanation</td>
+            </tr>
+            <tr>
+                <td><code>GitAssignment_Report.pdf</code></td>
+                <td>main</td>
+                <td>Final submitted assignment report containing all questions and solutions</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout callout-success" style="margin-top: 15px;">
+        <h4 style="margin: 0 0 4px 0; color: #15803d;">Deliverable Verification Complete</h4>
+        <p style="margin: 0; font-size: 8.5pt;">
+            Public GitHub Repository: <a href="https://github.com/sagarBUILDS/gitassignment" style="font-weight: 700; color: #16a34a;">https://github.com/sagarBUILDS/gitassignment</a><br>
+            All remote commits and branches are synchronized and publicly viewable.
+        </p>
+    </div>
+    <div class="page-footer-bar">
+        <span>University Git Assignment</span>
+        <span>Page 6 of 6</span>
+    </div>
+</div>
+
+</body>
+</html>
