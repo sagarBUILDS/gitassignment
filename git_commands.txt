@@ -1,0 +1,77 @@
+git init
+Initializes a new Git repository in the current project directory.
+
+git status
+Displays the state of the working directory and staging area, showing tracked, untracked, and modified files.
+
+git add index.html about.html
+Stages the specified initial HTML files, preparing them to be committed.
+
+git commit -m "Initial project setup"
+Creates the initial snapshot of the project in the repository with a descriptive commit message.
+
+git add index.html
+Stages the modified index.html containing newly added navigation, feature lists, and footer content.
+
+git commit -m "Updated index page"
+Records a new commit capturing the improvements made to the index page.
+
+git branch feature
+Creates a new branch named 'feature' pointing to the current commit without switching to it.
+
+git checkout feature
+Switches the active working branch from 'main' to 'feature'.
+
+git add about.html
+Stages the updated about.html file modified within the isolated feature branch.
+
+git commit -m "Added feature updates"
+Creates a commit on the 'feature' branch containing the about page enhancements.
+
+git checkout main
+Switches the active branch back to 'main' in preparation for merging.
+
+git merge feature
+Integrates the changes from the 'feature' branch into the 'main' branch via fast-forward merge.
+
+git log --oneline --graph --all
+Renders an ASCII graph of the complete commit history across all branches in a concise single-line format.
+
+git check-ignore sample.log temp/cache.tmp
+Debugs and verifies that specified files match active ignore patterns defined in .gitignore.
+
+git add .gitignore
+Stages the .gitignore file that specifies patterns for files and directories Git should ignore.
+
+git commit -m "Configure .gitignore for logs and temp files"
+Records the .gitignore file into the repository to persistently ignore *.log and temp/ directories.
+
+git add README.md
+Stages the README.md file containing project documentation and assignment specifications.
+
+git commit -m "Update README"
+Creates a new commit to demonstrate and test Git commit undo capabilities.
+
+git reset --soft HEAD~1
+Undoes the most recent commit while preserving all changes safely staged in the index and working directory.
+
+git commit -m "Add README documentation"
+Re-commits the verified README.md file safely preserved after the reset operation.
+
+git remote add origin https://github.com/sagarBUILDS/gitassignment.git
+Links the local Git repository to the remote public repository hosted on GitHub.
+
+git push -u origin main
+Uploads local 'main' branch commits to GitHub and sets 'origin/main' as the default upstream tracking branch.
+
+git push origin feature
+Uploads the local 'feature' branch to the remote GitHub repository for complete branch synchronization.
+
+git add git_commands.txt
+Stages the command reference file containing all executed Git commands and their explanations.
+
+git commit -m "Add git_commands.txt with documented commands"
+Commits the complete Git command log into the repository history.
+
+git push origin main
+Pushes the latest commit containing git_commands.txt to the remote GitHub repository.
